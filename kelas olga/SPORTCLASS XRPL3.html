@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sportclass — Portal PJOK XRPL3</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap');
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --sport-dark: #1E3D2B;
+      --sport-primary: #2D5A3E;
+      --sport-accent: #3E7B54;
+      --sport-bg: #F4F7F4;
+      --sport-card: #FFFFFF;
+      --sport-border: #D7E3D8;
+    }
+
+    .bg-sport-dark { background-color: var(--sport-dark); }
+    .bg-sport-primary { background-color: var(--sport-primary); }
+    .bg-sport-bg { background-color: var(--sport-bg); }
+    .border-sport-dark { border-color: var(--sport-dark); }
+    .border-sport-border { border-color: var(--sport-border); }
+    .text-sport-dark { color: var(--sport-dark); }
+    .text-sport-primary { color: var(--sport-primary); }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+
+    /* Camera Flash Effect */
+    @keyframes flash {
+      0% { opacity: 0.8; }
+      100% { opacity: 0; }
+    }
+    .camera-flash {
+      animation: flash 250ms ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-stone-950 min-h-screen flex items-center justify-center p-0 sm:p-4 selection:bg-emerald-200">
+
+  <!-- Mobile Screen Container Frame -->
+  <div class="relative w-full sm:max-w-md h-[100dvh] sm:h-[870px] bg-sport-bg text-slate-800 flex flex-col shadow-2xl sm:rounded-[40px] overflow-hidden border-0 sm:border-[10px] border-stone-800">
+
+    <!-- Screen 1: Login Screen -->
+    <section id="screen-login" class="flex-1 flex flex-col justify-between p-7 bg-sport-bg text-sport-dark select-none">
+      <div class="pt-8 text-center">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#2D5A3E]/10 text-sport-primary mb-3 shadow-xs">
+          <i data-lucide="dumbbell" class="w-7 h-7 stroke-[2.2]"></i>
+        </div>
+        <h1 class="text-4xl font-extrabold tracking-tight italic text-sport-dark">sportclass</h1>
+        <p class="text-[11px] uppercase tracking-widest font-bold text-sport-primary mt-1.5">masuk ke kelas</p>
+        <p class="text-xs text-stone-500 font-medium">gunakan NIS anda</p>
+      </div>
+
+      <form id="login-form" class="space-y-4 my-auto max-w-xs mx-auto w-full">
+        <div>
+          <label class="block text-[11px] uppercase tracking-wider font-bold text-sport-dark mb-1.5">NIS</label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="login-nis" 
+              required
+              autocomplete="username"
+              placeholder="Contoh: 539261004" 
+              class="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-white text-slate-800 text-xs font-semibold border border-sport-border focus:outline-none focus:ring-2 focus:ring-sport-primary shadow-xs transition"
+            />
+            <i data-lucide="user" class="w-4 h-4 text-stone-400 absolute left-3.5 top-3.5"></i>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] uppercase tracking-wider font-bold text-sport-dark mb-1.5">Password</label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="login-password" 
+              required
+              autocomplete="current-password"
+              placeholder="Masukkan Password (12345)" 
+              class="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-white text-slate-800 text-xs font-semibold border border-sport-border focus:outline-none focus:ring-2 focus:ring-sport-primary shadow-xs transition"
+            />
+            <i data-lucide="lock" class="w-4 h-4 text-stone-400 absolute left-3.5 top-3.5"></i>
+          </div>
+        </div>
+        
+        <button 
+          type="submit" 
+          class="w-full py-3.5 bg-sport-dark hover:bg-sport-primary active:scale-[0.98] text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-md transition duration-150"
+        >
+          masuk
+        </button>
+
+        <div class="text-center pt-2">
+          <a href="#" onclick="alert('Silakan hubungi Guru PJOK atau Administrator Kelas untuk mereset kata sandi Anda.')" class="text-xs text-stone-500 hover:text-sport-dark underline font-medium">Lupa Password?</a>
+        </div>
+      </form>
+
+      <div class="text-center pb-3 text-[11px] text-stone-400 font-medium">
+        Pendidikan Jasmani, Olahraga & Kesehatan • Kelas XRPL3
+      </div>
+    </section>
+
+    <!-- Main App Container -->
+    <div id="main-app" class="hidden flex-1 flex flex-col bg-sport-bg overflow-hidden">
+      
+      <!-- Top Navigation Header -->
+      <header class="bg-sport-dark px-5 py-3.5 flex items-center justify-between text-white shadow-sm z-10">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-emerald-300">
+            <i data-lucide="dumbbell" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-extrabold italic tracking-tight leading-none">sportclass</h2>
+            <span id="display-class-badge" class="text-[10px] font-semibold text-emerald-200 tracking-wider uppercase">Kelas XRPL3</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="text-right">
+            <p id="header-student-name" class="text-xs font-bold leading-tight">Nama</p>
+            <p id="header-student-nis" class="text-[9px] text-emerald-300 font-medium">NIS: -</p>
+          </div>
+          <button id="logout-btn" title="Keluar" class="p-2 bg-white/10 hover:bg-white/20 active:scale-95 rounded-xl transition">
+            <i data-lucide="log-out" class="w-4 h-4 text-emerald-100"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Tab Content Body -->
+      <main class="flex-1 overflow-y-auto p-4 sm:p-5 pb-24 space-y-4">
+
+        <!-- Tab 1: Utama (Home) -->
+        <section id="tab-home" class="space-y-4">
+          <div class="bg-white p-5 rounded-3xl shadow-xs border border-sport-border relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-emerald-50 rounded-full pointer-events-none"></div>
+            <div class="relative">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 text-sport-primary rounded-full text-[10px] font-bold tracking-wide uppercase">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Portal Siswa XRPL3
+              </span>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-sport-primary mt-2">Selamat Datang,</h3>
+              <h2 id="home-student-name" class="text-2xl font-black text-sport-dark tracking-tight leading-tight">[nama panggilan]</h2>
+              <p class="text-xs text-stone-500 font-semibold mt-0.5">di Halaman Utama</p>
+            </div>
+          </div>
+
+          <div class="bg-sport-dark text-white p-5 rounded-3xl shadow-md space-y-3 relative overflow-hidden">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-emerald-300">
+                <i data-lucide="flame" class="w-4 h-4"></i>
+                <h4 class="font-bold text-xs uppercase tracking-wider text-emerald-200">Materi Hari Ini:</h4>
+              </div>
+              <span class="text-[10px] bg-white/15 px-2 py-0.5 rounded-md font-semibold text-emerald-100">Pertemuan 1</span>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-sm p-4 rounded-2xl border border-white/15">
+              <p class="font-extrabold text-base tracking-tight leading-snug">Senam Lantai: Roll Depan & Sikap Lilin</p>
+              <p class="text-xs text-emerald-200 mt-1 font-medium">Bulan September • Praktik Matras Lapangan Dalam</p>
+            </div>
+          </div>
+
+          <!-- Highlighted Teacher Contact UI -->
+          <div class="bg-white p-5 rounded-3xl shadow-xs border border-sport-border space-y-3">
+            <div class="flex items-center justify-between pb-1">
+              <h4 class="font-bold text-xs uppercase tracking-wider text-sport-dark">Hubungi Gurumu Di:</h4>
+              <span class="text-[10px] text-stone-400 font-medium bg-stone-100 px-2 py-1 rounded-md">Guru PJOK</span>
+            </div>
+            
+            <a href="https://wa.me/6282297387272" target="_blank" class="flex items-center justify-between p-4 rounded-[22px] bg-gradient-to-br from-emerald-50 to-sport-bg hover:from-emerald-100 hover:to-emerald-50 border border-emerald-200 shadow-sm text-sport-dark transition-all active:scale-[0.98] group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-[14px] bg-[#25D366]/15 flex items-center justify-center text-[#25D366] shadow-inner group-hover:scale-110 transition-transform">
+                  <i data-lucide="message-circle" class="w-6 h-6 stroke-[2.2]"></i>
+                </div>
+                <div>
+                  <span class="block text-base font-extrabold tracking-wide">+62 822-9738-7272</span>
+                  <span class="text-[11px] text-emerald-800 font-semibold mt-0.5 block">Chat WhatsApp Guru</span>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-xs border border-stone-100 group-hover:bg-[#25D366] group-hover:border-[#25D366] group-hover:text-white transition-colors">
+                <i data-lucide="arrow-right" class="w-4 h-4 text-stone-400 group-hover:text-white transition-colors"></i>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- Tab 2: Presensi -->
+        <section id="tab-presensi" class="hidden space-y-4">
+          <div id="attendance-done-banner" class="hidden bg-emerald-100/90 border border-emerald-300 text-emerald-950 p-3.5 rounded-2xl text-xs flex items-center gap-3 shadow-xs">
+            <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
+              <i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>
+            </div>
+            <div class="min-w-0">
+              <p class="font-extrabold text-xs">Presensi Hari Ini Berhasil!</p>
+              <p id="attendance-done-detail" class="text-[11px] text-emerald-800 truncate">Status: Hadir • Dicatat 06.50 WIB</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-3xl shadow-xs border border-sport-border text-center">
+            <div class="flex items-center justify-between mb-3 px-1">
+              <span class="text-xs font-bold text-sport-dark uppercase tracking-wider">Foto Muka Anda</span>
+              <span class="text-[10px] font-semibold bg-sport-bg px-2 py-0.5 rounded-md text-stone-500">Verifikasi Wajah</span>
+            </div>
+            
+            <div class="relative w-52 h-52 mx-auto rounded-[38px] p-1 border-[6px] border-sport-dark bg-stone-900 flex items-center justify-center shadow-inner overflow-hidden group">
+              <div id="flash-overlay" class="absolute inset-0 bg-white pointer-events-none opacity-0 z-20"></div>
+
+              <div class="absolute inset-4 border border-white/20 rounded-[28px] pointer-events-none z-10 flex flex-col justify-between p-2">
+                <div class="flex justify-between text-white/40 text-[9px] font-mono"><span>+</span><span>+</span></div>
+                <div class="flex justify-between text-white/40 text-[9px] font-mono"><span>+</span><span>+</span></div>
+              </div>
+
+              <img id="photo-preview" src="" alt="Foto Presensi" class="w-full h-full object-cover rounded-[30px] hidden" />
+              <video id="webcam-video" autoplay playsinline class="w-full h-full object-cover rounded-[30px] hidden"></video>
+              <canvas id="snapshot-canvas" class="hidden"></canvas>
+              
+              <div id="camera-placeholder" class="flex flex-col items-center justify-center text-stone-400 p-4">
+                <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-white/70 mb-2">
+                  <i data-lucide="camera" class="w-6 h-6 stroke-[1.8]"></i>
+                </div>
+                <span class="text-xs font-semibold text-stone-300">Belum Ada Foto</span>
+                <span class="text-[10px] text-stone-400 mt-0.5">Buka kamera atau unggah file</span>
+              </div>
+            </div>
+
+            <div id="camera-controls-area" class="mt-4 flex flex-wrap justify-center gap-2">
+              <button id="open-camera-btn" type="button" class="px-4 py-2.5 bg-sport-dark hover:bg-sport-primary active:scale-95 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-xs">
+                <i data-lucide="video" class="w-4 h-4"></i> Buka Kamera
+              </button>
+              <button id="capture-btn" type="button" class="hidden px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 active:scale-95 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-md">
+                <i data-lucide="aperture" class="w-4 h-4"></i> Jepret Selfie
+              </button>
+              <label id="upload-label" class="cursor-pointer px-4 py-2.5 bg-stone-100 hover:bg-stone-200 active:scale-95 text-stone-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-stone-200">
+                <i data-lucide="image" class="w-4 h-4"></i> Galeri
+                <input type="file" id="file-input" accept="image/*" class="hidden" />
+              </label>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-3xl shadow-xs border border-sport-border">
+            <h3 class="font-bold text-sport-dark text-xs uppercase tracking-wider mb-2.5">Status Presensimu</h3>
+            <div class="grid grid-cols-4 gap-2">
+              <button class="status-selector-btn py-2.5 rounded-xl text-xs font-bold border-2 border-sport-dark bg-sport-dark text-white transition active:scale-95" data-val="Hadir">Hadir</button>
+              <button class="status-selector-btn py-2.5 rounded-xl text-xs font-bold border border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100 transition active:scale-95" data-val="Sakit">Sakit</button>
+              <button class="status-selector-btn py-2.5 rounded-xl text-xs font-bold border border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100 transition active:scale-95" data-val="Izin">Izin</button>
+              <button class="status-selector-btn py-2.5 rounded-xl text-xs font-bold border border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100 transition active:scale-95" data-val="Dispen">Dispen</button>
+            </div>
+
+            <div id="keterangan-field-container" class="hidden mt-3 pt-3 border-t border-stone-100 space-y-1.5">
+              <label class="block text-xs font-bold text-sport-dark flex items-center gap-1.5">
+                <i data-lucide="clipboard-pen-line" class="w-3.5 h-3.5 text-sport-primary"></i>
+                <span id="keterangan-label-text">Keterangan / Alasan</span>
+              </label>
+              <textarea 
+                id="input-keterangan" 
+                rows="2" 
+                placeholder="Tuliskan keterangan / alasan..."
+                class="w-full p-3 text-xs bg-sport-bg rounded-xl border border-sport-border focus:outline-none focus:ring-2 focus:ring-sport-primary text-slate-800 resize-none font-medium"
+              ></textarea>
+            </div>
+
+            <button 
+              id="submit-presensi-btn" 
+              class="w-full mt-4 py-3.5 bg-sport-dark hover:bg-sport-primary active:scale-[0.98] disabled:bg-stone-200 disabled:text-stone-400 disabled:cursor-not-allowed text-white text-xs font-bold uppercase tracking-wider rounded-2xl shadow-sm transition duration-150"
+            >
+              Kirim Presensi Sekarang
+            </button>
+          </div>
+
+          <div class="bg-white p-5 rounded-3xl shadow-xs border border-sport-border space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-bold text-sport-dark text-xs uppercase tracking-wider">Riwayat Presensi</h3>
+                <p class="text-[10px] text-stone-400">Ketuk thumbnail untuk melihat foto</p>
+              </div>
+              <span id="history-total-count" class="text-[11px] bg-sport-bg text-sport-dark px-2.5 py-0.5 rounded-full font-bold border border-sport-border">0 Catatan</span>
+            </div>
+
+            <div class="grid grid-cols-4 gap-1.5 p-2 bg-sport-bg rounded-2xl text-center text-[10px]">
+              <div class="bg-white py-2 px-1 rounded-xl border border-sport-border/60">
+                <span class="block font-black text-emerald-800 text-sm" id="stat-hadir">0</span>
+                <span class="text-stone-500 font-semibold text-[9px]">Hadir</span>
+              </div>
+              <div class="bg-white py-2 px-1 rounded-xl border border-sport-border/60">
+                <span class="block font-black text-rose-700 text-sm" id="stat-sakit">0</span>
+                <span class="text-stone-500 font-semibold text-[9px]">Sakit</span>
+              </div>
+              <div class="bg-white py-2 px-1 rounded-xl border border-sport-border/60">
+                <span class="block font-black text-amber-700 text-sm" id="stat-izin">0</span>
+                <span class="text-stone-500 font-semibold text-[9px]">Izin</span>
+              </div>
+              <div class="bg-white py-2 px-1 rounded-xl border border-sport-border/60">
+                <span class="block font-black text-blue-700 text-sm" id="stat-dispen">0</span>
+                <span class="text-stone-500 font-semibold text-[9px]">Dispen</span>
+              </div>
+            </div>
+
+            <div id="attendance-history-list" class="space-y-2.5 max-h-[300px] overflow-y-auto pr-1"></div>
+          </div>
+        </section>
+
+        <!-- Tab 3: Nilai -->
+        <section id="tab-nilai" class="hidden space-y-4">
+          <div class="bg-white p-6 rounded-3xl shadow-xs border border-sport-border text-center relative overflow-hidden">
+            <div class="w-16 h-16 bg-emerald-50 rounded-full absolute -left-4 -top-4 pointer-events-none"></div>
+            <h4 class="text-xs font-bold text-stone-400 uppercase tracking-widest">Nilaimu Adalah:</h4>
+            <div id="student-score-display" class="text-5xl font-black text-sport-dark tracking-tight my-1.5">90%</div>
+            <p id="student-score-note" class="text-xs font-bold text-sport-primary">Keep up the good work!</p>
+          </div>
+
+          <div class="bg-white p-4 rounded-3xl shadow-xs border border-sport-border space-y-2.5">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-xs uppercase tracking-wider text-sport-dark">Nilai Teman sekelasmu:</h4>
+                <p class="text-[10px] text-stone-400">Total 32 Siswa • Kelas XRPL3</p>
+              </div>
+              <span class="text-[9px] bg-emerald-100 text-emerald-900 border border-emerald-300 px-2 py-0.5 rounded-full font-bold">Baris Anda Disorot</span>
+            </div>
+            
+            <div class="overflow-x-auto rounded-xl border border-stone-300 bg-white text-[11px] font-mono shadow-inner max-h-[420px]">
+              <table class="w-full text-left whitespace-nowrap border-collapse">
+                <thead class="sticky top-0 z-10">
+                  <tr class="bg-stone-100 text-stone-500 text-[10px] font-bold border-b border-stone-300 text-center select-none">
+                    <th class="p-1 border-r border-stone-300 w-8 bg-stone-200"></th>
+                    <th class="p-1 border-r border-stone-300">A</th>
+                    <th class="p-1 border-r border-stone-300">B</th>
+                    <th class="p-1 border-r border-stone-300">C</th>
+                    <th class="p-1 border-r border-stone-300">D</th>
+                    <th class="p-1 border-r border-stone-300">E</th>
+                    <th class="p-1 border-r border-stone-300">F</th>
+                    <th class="p-1 border-r border-stone-300">G</th>
+                    <th class="p-1 border-r border-stone-300">H</th>
+                    <th class="p-1 border-r border-stone-300">I</th>
+                    <th class="p-1">J</th>
+                  </tr>
+                  <tr class="bg-stone-50 text-stone-800 font-bold border-b border-stone-300 text-xs">
+                    <th class="p-1.5 border-r border-stone-300 bg-stone-200 text-stone-600 text-center font-mono text-[10px]">1</th>
+                    <th class="p-1.5 border-r border-stone-300 text-center">No</th>
+                    <th class="p-1.5 border-r border-stone-300 min-w-[170px]">Nama</th>
+                    <th class="p-1.5 border-r border-stone-300">Kelas</th>
+                    <th class="p-1.5 border-r border-stone-300 text-center">27/7</th>
+                    <th class="p-1.5 border-r border-stone-300 text-center">ukd1</th>
+                    <th class="p-1.5 border-r border-stone-300 text-center">3/8</th>
+                    <th class="p-1.5 border-r border-stone-300 text-center">ukd3</th>
+                    <th class="p-1.5 border-r border-stone-300 text-center">10/8</th>
+                    <th class="p-1.5 border-r border-stone-300 text-center">ukd5</th>
+                    <th class="p-1.5 text-center">7/9/26</th>
+                  </tr>
+                </thead>
+                <tbody id="grades-table-body" class="divide-y divide-stone-200 text-[11px] font-sans"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab 4: Materi -->
+        <section id="tab-materi" class="hidden space-y-3">
+          <div class="flex items-center justify-between px-1">
+            <h3 class="font-bold text-sport-dark text-xs uppercase tracking-wider">Silabus Materi PJOK</h3>
+            <span class="text-[10px] text-stone-400 font-semibold">Semester 1</span>
+          </div>
+          
+          <div class="bg-white rounded-2xl border border-sport-border shadow-2xs overflow-hidden transition">
+            <button class="accordion-toggle w-full p-4 flex items-center justify-between text-left hover:bg-sport-bg/60 transition">
+              <div>
+                <span class="text-[10px] font-bold text-sport-primary uppercase tracking-wider">Materi Pertemuan Ke-1 • September</span>
+                <p class="text-sm font-extrabold text-sport-dark mt-0.5">Roll Depan Dan Sikap Lilin</p>
+              </div>
+              <div class="w-7 h-7 rounded-lg bg-sport-bg flex items-center justify-center text-stone-500">
+                <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
+              </div>
+            </button>
+            <div class="accordion-content hidden px-4 pb-4 text-xs text-stone-600 border-t border-stone-100 pt-3 space-y-2">
+              <p class="leading-relaxed">Pembelajaran teknik dorongan tangan dan tumpuan tengkuk yang benar untuk menghindari cedera saat senam lantai.</p>
+              <div class="flex gap-2">
+                <span class="px-2 py-0.5 bg-emerald-50 text-emerald-800 rounded font-semibold text-[10px]">Praktik Matras</span>
+                <span class="px-2 py-0.5 bg-stone-100 text-stone-600 rounded font-semibold text-[10px]">Tenggat: 15 Sep</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-sport-border shadow-2xs overflow-hidden transition">
+            <button class="accordion-toggle w-full p-4 flex items-center justify-between text-left hover:bg-sport-bg/60 transition">
+              <div>
+                <span class="text-[10px] font-bold text-sport-primary uppercase tracking-wider">Materi Pertemuan Ke-2 • September</span>
+                <p class="text-sm font-extrabold text-sport-dark mt-0.5">Roll Belakang Dan Kayang</p>
+              </div>
+              <div class="w-7 h-7 rounded-lg bg-sport-bg flex items-center justify-center text-stone-500">
+                <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
+              </div>
+            </button>
+            <div class="accordion-content hidden px-4 pb-4 text-xs text-stone-600 border-t border-stone-100 pt-3 space-y-2">
+              <p class="leading-relaxed">Melatih kelenturan punggung dan kekuatan pergelangan tangan untuk tolakan optimal saat guling ke belakang.</p>
+              <div class="flex gap-2">
+                <span class="px-2 py-0.5 bg-emerald-50 text-emerald-800 rounded font-semibold text-[10px]">Praktik Kelenturan</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-sport-border shadow-2xs overflow-hidden transition">
+            <button class="accordion-toggle w-full p-4 flex items-center justify-between text-left hover:bg-sport-bg/60 transition">
+              <div>
+                <span class="text-[10px] font-bold text-sport-primary uppercase tracking-wider">Materi Pertemuan Ke-3 • September</span>
+                <p class="text-sm font-extrabold text-sport-dark mt-0.5">Latihan Kebugaran & Kelenturan</p>
+              </div>
+              <div class="w-7 h-7 rounded-lg bg-sport-bg flex items-center justify-center text-stone-500">
+                <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
+              </div>
+            </button>
+            <div class="accordion-content hidden px-4 pb-4 text-xs text-stone-600 border-t border-stone-100 pt-3 space-y-2">
+              <p class="leading-relaxed">Sirkuit ketahanan fisik mencakup push-up, sit-up, dan lari bolak-balik (shuttle run).</p>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Bottom Navigation Bar -->
+      <nav class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-sport-border px-6 py-2.5 flex justify-around items-center shadow-lg z-20">
+        <button class="nav-button flex flex-col items-center gap-1 text-sport-dark font-bold text-[11px] transition active:scale-90" data-target="tab-home">
+          <i data-lucide="home" class="w-5 h-5"></i>
+          <span>Utama</span>
+        </button>
+        <button class="nav-button flex flex-col items-center gap-1 text-stone-400 hover:text-sport-primary font-medium text-[11px] transition active:scale-90" data-target="tab-materi">
+          <i data-lucide="book-marked" class="w-5 h-5"></i>
+          <span>Materi</span>
+        </button>
+        <button class="nav-button flex flex-col items-center gap-1 text-stone-400 hover:text-sport-primary font-medium text-[11px] transition active:scale-90" data-target="tab-nilai">
+          <i data-lucide="award" class="w-5 h-5"></i>
+          <span>Nilai</span>
+        </button>
+        <button class="nav-button flex flex-col items-center gap-1 text-stone-400 hover:text-sport-primary font-medium text-[11px] transition active:scale-90" data-target="tab-presensi">
+          <i data-lucide="user-check" class="w-5 h-5"></i>
+          <span>Presensi</span>
+        </button>
+      </nav>
+
+    </div>
+
+    <!-- Attendance Photo Lightbox Modal -->
+    <div id="photo-modal" class="hidden absolute inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+      <div class="bg-white rounded-[32px] p-5 max-w-xs w-full text-center space-y-3 shadow-2xl border border-stone-100">
+        <div class="flex items-center justify-between border-b border-stone-100 pb-2.5">
+          <div class="text-left">
+            <span id="modal-date-title" class="font-bold text-xs text-sport-dark block">Senin, 07 Sep 2026</span>
+            <span class="text-[10px] text-stone-400">Verifikasi Presensi</span>
+          </div>
+          <button id="close-modal-btn" class="text-stone-400 hover:text-stone-700 p-1.5 rounded-full hover:bg-stone-100 transition">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div class="w-56 h-56 mx-auto rounded-[28px] overflow-hidden border-4 border-sport-dark bg-stone-900 shadow-inner">
+          <img id="modal-img" src="" alt="Bukti Foto" class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <span id="modal-status-badge" class="px-3 py-1 rounded-full text-xs font-bold inline-block">Hadir</span>
+          <p id="modal-time-detail" class="text-xs text-stone-500 mt-1 font-medium">Dicatat pada pukul 06.50 WIB</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Keterangan Modal -->
+    <div id="edit-keterangan-modal" class="hidden absolute inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+      <div class="bg-white rounded-[32px] p-5 max-w-xs w-full space-y-3.5 shadow-2xl border border-stone-100">
+        <div class="flex items-center justify-between border-b border-stone-100 pb-2.5">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-emerald-100 text-sport-dark flex items-center justify-center">
+              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+            </div>
+            <span class="font-bold text-xs text-sport-dark">Edit Keterangan</span>
+          </div>
+          <button id="close-edit-modal-btn" class="text-stone-400 hover:text-stone-700 p-1 rounded-full hover:bg-stone-100 transition">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <div class="flex justify-between items-center text-[11px]">
+            <span id="edit-modal-date" class="font-bold text-sport-dark">Senin, 07 Sep 2026</span>
+            <span id="edit-modal-badge" class="px-2 py-0.5 rounded font-bold text-[10px]">Sakit</span>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-stone-600 mb-1">Perbarui Catatan / Alasan:</label>
+            <textarea 
+              id="edit-modal-textarea" 
+              rows="3" 
+              class="w-full p-3 text-xs bg-sport-bg rounded-xl border border-sport-border focus:outline-none focus:ring-2 focus:ring-sport-primary resize-none text-stone-800 font-medium"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-1">
+          <button id="cancel-edit-modal-btn" class="px-3.5 py-2 text-xs font-semibold text-stone-600 bg-stone-100 hover:bg-stone-200 rounded-xl transition">
+            Batal
+          </button>
+          <button id="save-edit-modal-btn" class="px-4 py-2 text-xs font-bold text-white bg-sport-dark hover:bg-sport-primary active:scale-95 rounded-xl shadow-xs transition">
+            Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const SAMPLE_PHOTO = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%232D5A3E'/><circle cx='100' cy='80' r='38' fill='%23EEF3EF'/><path d='M35,180 C35,135 60,120 100,120 C140,120 165,135 165,180 Z' fill='%23EEF3EF'/></svg>";
+
+    // Dataset Lengkap 32 Siswa sesuai dengan gambar terbaru
+    const CLASS_RECORDS = [
+      { row: 1, no: 1, nis: "539261004", name: "ABQORY KAMALUDIN NAJIB", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "92 h" },
+      { row: 2, no: 2, nis: "539261013", name: "AGNIA ARIBAH WANUDYA", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "90 h" },
+      { row: 3, no: 3, nis: "539261018", name: "AIDAN FITRA PUTRA ANUGRA", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "96 h", c5: "90 s", c6: "92 h", c7: "98 h" },
+      { row: 4, no: 4, nis: "539261033", name: "ALVIN TRI RAMADAN", k: "XRPL3", c1: "h", c2: "90 h", c3: "100 h", c4: "94 h", c5: "90 h", c6: "92 h", c7: "94 h" },
+      { row: 5, no: 5, nis: "539261048", name: "ANJAS HILSA WAHYU DRAJAD SUNARDI", k: "XRPL3", c1: "h", c2: "90 h", c3: "96 h", c4: "96 h", c5: "82 h", c6: "92 h", c7: "100 h" },
+      { row: 6, no: 6, nis: "539261051", name: "ARCELIA MISHA EFENDI", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 s", c4: "90 h", c5: "90 h", c6: "90 h", c7: "90 h" },
+      { row: 7, no: 7, nis: "539261063", name: "AZKA VIANDRA HARSYA", k: "XRPL3", c1: "h", c2: "90 h", c3: "100 h", c4: "100 h", c5: "100 h", c6: "94 h", c7: "100 h" },
+      { row: 8, no: 8, nis: "539261076", name: "CHIKO NIBRAS ARIESTA", k: "XRPL3", c1: "h", c2: "92 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "92 h" },
+      { row: 9, no: 9, nis: "539261083", name: "DAFFA MUHAMMAD WIBNER", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "94 h" },
+      { row: 10, no: 10, nis: "539261096", name: "DEWA PRADITYA UNTARA", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "90 h" },
+      { row: 11, no: 11, nis: "539261114", name: "FABIAN IBRA PUTRA RINASTO", k: "XRPL3", c1: "h", c2: "94 h", c3: "90 h", c4: "90 h", c5: "w_h", c6: "w_h", c7: "w_h" },
+      { row: 12, no: 12, nis: "539261127", name: "FATHAN A IRZAN", k: "XRPL3", c1: "h", c2: "w_h", c3: "w_h", c4: "w_h", c5: "b_i", c6: "90 h", c7: "90 h" },
+      { row: 13, no: 13, nis: "539261134", name: "FAYYAZ ILHAM BAIHAQI", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "96 h" },
+      { row: 14, no: 14, nis: "539261139", name: "FREYA AIRI AZURA", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "92 h" },
+      { row: 15, no: 15, nis: "539261153", name: "GUNAWAN KUNCORO SAKTI PUTRANTO", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "94 h" },
+      { row: 16, no: 16, nis: "539261169", name: "JAGAD RIZKY APRILIO", k: "XRPL3", c1: "h", c2: "94 h", c3: "92 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "94 h" },
+      { row: 17, no: 17, nis: "539261175", name: "KAMILIA PUTRI", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 s", c7: "92 h" },
+      { row: 18, no: 18, nis: "539261182", name: "KEVIN VERIANT FATTAH", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "92 h", c6: "90 h", c7: "90 h" },
+      { row: 19, no: 19, nis: "539261200", name: "MAXIMILLIAN KEN KAUTSAR", k: "XRPL3", c1: "h", c2: "94 h", c3: "92 h", c4: "90 h", c5: "90 h", c6: "92 h", c7: "94 h" },
+      { row: 20, no: 20, nis: "539261219", name: "MUHAMMAD ALIF ARFA", k: "XRPL3", c1: "h", c2: "94 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "92 h", c7: "96 h" },
+      { row: 21, no: 21, nis: "539261226", name: "MUHAMMAD DZIKRI AVEROES ZAFRAN", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 s", c5: "90 h", c6: "90 h", c7: "90 h" },
+      { row: 22, no: 22, nis: "539261240", name: "MUHAMMAD ILHAM FADILLA", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "92 h", c7: "r_2h" },
+      { row: 23, no: 23, nis: "539261253", name: "MUHAMMAD RAYYAN PRADITA", k: "XRPL3", c1: "h", c2: "100 h", c3: "96 h", c4: "100 h", c5: "94 h", c6: "94 h", c7: "92 h" },
+      { row: 24, no: 24, nis: "539261263", name: "MUHAMMAD WILDAN ARAF", isRedRow: true, k: "XRPL3", c1: "h", c2: "95 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "94 h", c7: "94 h" },
+      { row: 25, no: 25, nis: "539261281", name: "NIZAM TEGUH AL FATIH", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "92 h", c5: "90 h", c6: "92 h", c7: "96 h" },
+      { row: 26, no: 26, nis: "539261290", name: "RAFAEL LINTANG PRATAMA", k: "XRPL3", c1: "h", c2: "92 h", c3: "94 h", c4: "92 h", c5: "90 h", c6: "100 h", c7: "100 h" },
+      { row: 27, no: 27, nis: "539261298", name: "RAHMATULLAH YAFI ALIFUDDIN", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "90 h" },
+      { row: 28, no: 28, nis: "539261304", name: "RANIA ANISSABRINA", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "90 h" },
+      { row: 29, no: 29, nis: "539261315", name: "RESKI DIMAS PRABOWO", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "90 h" },
+      { row: 30, no: 30, nis: "539261330", name: "SAHPUTRA WISNU AL YUSUF", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "90 h" },
+      { row: 31, no: 31, nis: "539261342", name: "SYAHRUR RIDHO", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "90 h" },
+      { row: 32, no: 32, nis: "539261355", name: "WILSON HALOMOAN MARBUN", k: "XRPL3", c1: "h", c2: "90 h", c3: "90 h", c4: "90 h", c5: "90 h", c6: "90 h", c7: "90 h" }
+    ];
+
+    function getNickname(fullName) {
+      const parts = fullName.split(' ');
+      if (parts[0] === 'MUHAMMAD' && parts.length > 1) return parts[1].charAt(0).toUpperCase() + parts[1].slice(1).toLowerCase();
+      return parts[0].charAt(0).toUpperCase() + parts[0].slice(1).toLowerCase();
+    }
+
+    function computeStudentScore(rec) {
+      const cells = [rec.c2, rec.c3, rec.c4, rec.c5, rec.c6, rec.c7];
+      let sum = 0, count = 0;
+      cells.forEach(c => {
+        if (c.startsWith('w_') || c === 'b_i') return;
+        const num = parseInt(c.replace(/[^\d]/g, ''), 10);
+        if (!isNaN(num)) {
+          sum += num;
+          count++;
+        }
+      });
+      return count > 0 ? Math.round(sum / count) + '%' : '85%';
+    }
+
+    // Inisialisasi Akun Siswa (Password seluruhnya menggunakan 12345)
+    const STUDENTS = {};
+    CLASS_RECORDS.forEach(rec => {
+      const nick = getNickname(rec.name);
+      const score = computeStudentScore(rec);
+      let note = "Keep up the good work!";
+      if (rec.isRedRow) note = "Perhatikan presensi kehadiran harian!";
+      else if (parseInt(score, 10) >= 95) note = "Prestasi istimewa di kelas PJOK!";
+      else if (rec.c7 === 'r_2h') note = "Harap segera ikuti perbaikan nilai akhir!";
+      else if (rec.c5.startsWith('w_') || rec.c2.startsWith('w_')) note = "Harap selesaikan tugas praktik yang kosong.";
+
+      STUDENTS[rec.nis] = {
+        nis: rec.nis,
+        password: "12345", // Kata sandi disetralisasi
+        name: rec.name,
+        nickname: nick,
+        kelas: rec.k,
+        score: score,
+        note: note,
+        defaultHistory: [
+          { id: "h1", day: "Kamis", date: "10 Sep 2026", time: "Pukul 07.30 WIB", status: "Hadir", detail: "Hadir Pukul 7.30 (telat)", badge: "bg-amber-100 text-amber-900 border border-amber-300", photo: SAMPLE_PHOTO },
+          { id: "h2", day: "Rabu", date: "09 Sep 2026", time: "Pukul 07.00 WIB", status: "Sakit", detail: "Demam & flu, istirahat dokter", badge: "bg-rose-100 text-rose-900 border border-rose-300", photo: SAMPLE_PHOTO },
+          { id: "h3", day: "Selasa", date: "08 Sep 2026", time: "Pukul 06.40 WIB", status: "Izin", detail: "Izin urusan keluarga", badge: "bg-amber-100 text-amber-900 border border-amber-300", photo: SAMPLE_PHOTO },
+          { id: "h4", day: "Senin", date: "07 Sep 2026", time: "Pukul 06.50 WIB", status: "Hadir", detail: "Hadir Tepat Waktu", badge: "bg-emerald-100 text-emerald-900 border border-emerald-300", photo: SAMPLE_PHOTO }
+        ]
+      };
+    });
+
+    let currentStudent = null;
+    let videoStream = null;
+    let selectedStatus = "Hadir";
+    let capturedPhotoData = null;
+    let currentEditingItemId = null;
+
+    // Sistem Login Otentikasi
+    const loginForm = document.getElementById('login-form');
+    const nisInput = document.getElementById('login-nis');
+    const passInput = document.getElementById('login-password');
+    const screenLogin = document.getElementById('screen-login');
+    const mainApp = document.getElementById('main-app');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nis = nisInput.value.trim();
+      const pass = passInput.value.trim();
+
+      const student = STUDENTS[nis];
+      if (student && pass === student.password) {
+        currentStudent = student;
+        initStudentHistoryStorage(student.nis);
+        loadStudentDashboard();
+        screenLogin.classList.add('hidden');
+        mainApp.classList.remove('hidden');
+        loginForm.reset();
+      } else {
+        alert('NIS tidak terdaftar atau password salah!\nPastikan memasukkan NIS Anda secara benar.\n(Password default seluruh akun: 12345)');
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      stopCamera();
+      currentStudent = null;
+      mainApp.classList.add('hidden');
+      screenLogin.classList.remove('hidden');
+    });
+
+    function initStudentHistoryStorage(nis) {
+      const storageKey = `sportclass_history_${nis}`;
+      if (!localStorage.getItem(storageKey)) {
+        localStorage.setItem(storageKey, JSON.stringify(STUDENTS[nis].defaultHistory));
+      }
+    }
+
+    function getStudentHistory(nis) {
+      const storageKey = `sportclass_history_${nis}`;
+      return JSON.parse(localStorage.getItem(storageKey) || '[]');
+    }
+
+    function saveStudentHistory(nis, historyArray) {
+      const storageKey = `sportclass_history_${nis}`;
+      localStorage.setItem(storageKey, JSON.stringify(historyArray));
+    }
+
+    function loadStudentDashboard() {
+      document.getElementById('home-student-name').textContent = currentStudent.nickname;
+      document.getElementById('header-student-name').textContent = currentStudent.nickname;
+      document.getElementById('header-student-nis').textContent = `NIS: ${currentStudent.nis}`;
+      document.getElementById('display-class-badge').textContent = `Kelas ${currentStudent.kelas}`;
+
+      document.getElementById('student-score-display').textContent = currentStudent.score;
+      document.getElementById('student-score-note').textContent = currentStudent.note;
+      renderGradesTable();
+
+      resetAttendanceCard();
+      renderComprehensiveHistory();
+      checkDailyAttendanceStatus();
+    }
+
+    // Render Tabel Nilai Google Sheets (Dengan penyorotan pada baris akun yang sedang login)
+    function renderGradesTable() {
+      const tbody = document.getElementById('grades-table-body');
+      tbody.innerHTML = '';
+
+      CLASS_RECORDS.forEach(rec => {
+        const isCurrent = rec.nis === currentStudent.nis;
+        const tr = document.createElement('tr');
+        
+        if (isCurrent) {
+          tr.className = 'bg-emerald-100/90 font-bold text-emerald-950 border-y-2 border-emerald-600 shadow-xs';
+        } else {
+          tr.className = 'hover:bg-stone-50 transition border-b border-stone-200';
+        }
+
+        const renderCell = (val) => {
+          if (val === 'h') return `<span class="bg-[#2D8A4E] text-white px-2 py-0.5 rounded font-bold">h</span>`;
+          if (val === 'w_h') return `<span class="bg-white border border-stone-300 text-stone-700 px-2 py-0.5 rounded font-bold">h</span>`;
+          if (val === 'b_i') return `<span class="bg-[#3B82F6] text-white px-2 py-0.5 rounded font-bold">i</span>`;
+          if (val === 'r_2h') return `<span class="bg-[#EF4444] text-white px-1.5 py-0.5 rounded font-bold">2 h</span>`;
+          if (val.includes('s')) return `<span class="bg-[#F59E0B] text-stone-900 px-1.5 py-0.5 rounded font-bold">${val}</span>`;
+          return `<span class="bg-[#2D8A4E] text-white px-1.5 py-0.5 rounded font-bold">${val}</span>`;
+        };
+
+        const nameClass = rec.isRedRow 
+          ? 'bg-[#EF4444] text-white font-black px-2 py-1 rounded' 
+          : 'truncate font-medium';
+
+        tr.innerHTML = `
+          <td class="p-1 border-r border-stone-300 bg-stone-100 text-stone-500 font-mono text-[10px] text-center font-bold">${rec.row}</td>
+          <td class="p-1.5 border-r border-stone-200 text-center font-mono">${rec.no}</td>
+          <td class="p-1.5 border-r border-stone-200">
+            <div class="flex items-center justify-between gap-1">
+              <span class="${nameClass}">${rec.name}</span>
+              ${isCurrent ? '<span class="text-[9px] bg-sport-dark text-white px-1.5 py-0.2 rounded font-bold uppercase ml-1 flex-shrink-0">Kamu</span>' : ''}
+            </div>
+          </td>
+          <td class="p-1.5 border-r border-stone-200 font-mono">${rec.k}</td>
+          <td class="p-1.5 border-r border-stone-200 text-center">${renderCell(rec.c1)}</td>
+          <td class="p-1.5 border-r border-stone-200 text-center">${renderCell(rec.c2)}</td>
+          <td class="p-1.5 border-r border-stone-200 text-center">${renderCell(rec.c3)}</td>
+          <td class="p-1.5 border-r border-stone-200 text-center">${renderCell(rec.c4)}</td>
+          <td class="p-1.5 border-r border-stone-200 text-center">${renderCell(rec.c5)}</td>
+          <td class="p-1.5 border-r border-stone-200 text-center">${renderCell(rec.c6)}</td>
+          <td class="p-1.5 text-center">${renderCell(rec.c7)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Riwayat Presensi
+    function renderComprehensiveHistory() {
+      const history = getStudentHistory(currentStudent.nis);
+      const listContainer = document.getElementById('attendance-history-list');
+      const countBadge = document.getElementById('history-total-count');
+      
+      listContainer.innerHTML = '';
+      countBadge.textContent = `${history.length} Catatan`;
+
+      let statHadir = 0, statSakit = 0, statIzin = 0, statDispen = 0;
+      history.forEach(item => {
+        if (item.status === 'Hadir') statHadir++;
+        else if (item.status === 'Sakit') statSakit++;
+        else if (item.status === 'Izin') statIzin++;
+        else if (item.status === 'Dispen') statDispen++;
+      });
+      document.getElementById('stat-hadir').textContent = statHadir;
+      document.getElementById('stat-sakit').textContent = statSakit;
+      document.getElementById('stat-izin').textContent = statIzin;
+      document.getElementById('stat-dispen').textContent = statDispen;
+
+      if (history.length === 0) {
+        listContainer.innerHTML = `
+          <div class="text-center py-6 text-stone-400 text-xs">
+            <i data-lucide="clipboard-x" class="w-8 h-8 mx-auto stroke-1 mb-1"></i>
+            Belum ada riwayat kehadiran tersimpan.
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      history.forEach(item => {
+        const isEditable = ['Sakit', 'Izin', 'Dispen'].includes(item.status);
+        const card = document.createElement('div');
+        card.className = 'p-3 bg-stone-50 hover:bg-emerald-50/50 rounded-2xl border border-stone-200/80 flex items-center justify-between gap-3 transition';
+
+        card.innerHTML = `
+          <div class="flex items-center gap-3 min-w-0">
+            <button type="button" class="view-photo-btn relative flex-shrink-0 group" data-photo="${encodeURIComponent(item.photo)}" data-date="${item.day}, ${item.date}" data-time="${item.time}" data-status="${item.status}" data-badge="${item.badge}">
+              <img src="${item.photo}" alt="Selfie" class="w-11 h-11 rounded-xl object-cover border-2 border-sport-dark group-hover:opacity-80 transition" />
+              <span class="absolute inset-0 flex items-center justify-center bg-black/30 rounded-xl opacity-0 group-hover:opacity-100 transition text-white">
+                <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i>
+              </span>
+            </button>
+            <div class="min-w-0 pr-1">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-xs text-sport-dark">${item.day}</span>
+                <span class="text-[10px] text-stone-400 font-medium">• ${item.date}</span>
+              </div>
+              <p class="text-[11px] text-stone-600 font-medium truncate">${item.detail || item.time}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 flex-shrink-0">
+            <span class="px-2 py-0.5 ${item.badge} rounded-md text-[10px] font-bold tracking-wide">${item.status}</span>
+            ${isEditable ? `
+              <button 
+                type="button" 
+                class="edit-keterangan-btn p-1.5 text-stone-400 hover:text-sport-dark hover:bg-stone-200 rounded-lg transition" 
+                data-id="${item.id}"
+                title="Edit Keterangan"
+              >
+                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+              </button>
+            ` : ''}
+          </div>
+        `;
+        listContainer.appendChild(card);
+      });
+
+      document.querySelectorAll('.view-photo-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          openPhotoModal(
+            decodeURIComponent(btn.dataset.photo),
+            btn.dataset.date,
+            btn.dataset.time,
+            btn.dataset.status,
+            btn.dataset.badge
+          );
+        });
+      });
+
+      document.querySelectorAll('.edit-keterangan-btn').forEach(btn => {
+        btn.addEventListener('click', () => openEditKeteranganModal(btn.dataset.id));
+      });
+
+      lucide.createIcons();
+    }
+
+    // Modal Lightbox
+    const photoModal = document.getElementById('photo-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalDateTitle = document.getElementById('modal-date-title');
+    const modalTimeDetail = document.getElementById('modal-time-detail');
+    const modalStatusBadge = document.getElementById('modal-status-badge');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+
+    function openPhotoModal(imgSrc, dateText, timeText, status, badgeClass) {
+      modalImg.src = imgSrc;
+      modalDateTitle.textContent = dateText;
+      modalTimeDetail.textContent = `Dicatat: ${timeText}`;
+      modalStatusBadge.textContent = status;
+      modalStatusBadge.className = `px-3 py-1 rounded-full text-xs font-bold inline-block ${badgeClass}`;
+      photoModal.classList.remove('hidden');
+    }
+
+    closeModalBtn.addEventListener('click', () => photoModal.classList.add('hidden'));
+    photoModal.addEventListener('click', (e) => {
+      if (e.target === photoModal) photoModal.classList.add('hidden');
+    });
+
+    // Edit Modal
+    const editModal = document.getElementById('edit-keterangan-modal');
+    const editModalDate = document.getElementById('edit-modal-date');
+    const editModalBadge = document.getElementById('edit-modal-badge');
+    const editModalTextarea = document.getElementById('edit-modal-textarea');
+    const closeEditModalBtn = document.getElementById('close-edit-modal-btn');
+    const cancelEditModalBtn = document.getElementById('cancel-edit-modal-btn');
+    const saveEditModalBtn = document.getElementById('save-edit-modal-btn');
+
+    function openEditKeteranganModal(itemId) {
+      const history = getStudentHistory(currentStudent.nis);
+      const item = history.find(h => h.id === itemId);
+      if (!item) return;
+
+      currentEditingItemId = itemId;
+      editModalDate.textContent = `${item.day}, ${item.date}`;
+      editModalBadge.textContent = item.status;
+      editModalBadge.className = `px-2 py-0.5 rounded font-bold text-[10px] ${item.badge}`;
+      editModalTextarea.value = item.detail || '';
+
+      editModal.classList.remove('hidden');
+      editModalTextarea.focus();
+    }
+
+    function closeEditModal() {
+      editModal.classList.add('hidden');
+      currentEditingItemId = null;
+    }
+
+    closeEditModalBtn.addEventListener('click', closeEditModal);
+    cancelEditModalBtn.addEventListener('click', closeEditModal);
+    editModal.addEventListener('click', (e) => {
+      if (e.target === editModal) closeEditModal();
+    });
+
+    saveEditModalBtn.addEventListener('click', () => {
+      if (!currentEditingItemId) return;
+      const newKeterangan = editModalTextarea.value.trim();
+      if (!newKeterangan) {
+        alert('Keterangan tidak boleh kosong!');
+        return;
+      }
+
+      const history = getStudentHistory(currentStudent.nis);
+      const itemIndex = history.findIndex(h => h.id === currentEditingItemId);
+
+      if (itemIndex !== -1) {
+        history[itemIndex].detail = newKeterangan;
+        saveStudentHistory(currentStudent.nis, history);
+
+        const today = getTodayKey();
+        const lockKey = `sportclass_locked_${currentStudent.nis}_${today}`;
+        const savedLock = localStorage.getItem(lockKey);
+        if (savedLock) {
+          const parsed = JSON.parse(savedLock);
+          if (parsed.id === currentEditingItemId) {
+            parsed.detail = newKeterangan;
+            localStorage.setItem(lockKey, JSON.stringify(parsed));
+            document.getElementById('attendance-done-detail').textContent = `Status: ${parsed.status} (${newKeterangan}) • Dicatat pada ${parsed.time}`;
+          }
+        }
+
+        renderComprehensiveHistory();
+        closeEditModal();
+      }
+    });
+
+    // Fitur Kamera Selfie
+    const openCameraBtn = document.getElementById('open-camera-btn');
+    const captureBtn = document.getElementById('capture-btn');
+    const uploadLabel = document.getElementById('upload-label');
+    const fileInput = document.getElementById('file-input');
+    const webcamVideo = document.getElementById('webcam-video');
+    const photoPreview = document.getElementById('photo-preview');
+    const cameraPlaceholder = document.getElementById('camera-placeholder');
+    const canvas = document.getElementById('snapshot-canvas');
+    const flashOverlay = document.getElementById('flash-overlay');
+    const keteranganContainer = document.getElementById('keterangan-field-container');
+    const keteranganLabelText = document.getElementById('keterangan-label-text');
+    const inputKeterangan = document.getElementById('input-keterangan');
+
+    openCameraBtn.addEventListener('click', async () => {
+      try {
+        videoStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user', width: { ideal: 480 }, height: { ideal: 480 } }
+        });
+        webcamVideo.srcObject = videoStream;
+        webcamVideo.classList.remove('hidden');
+        photoPreview.classList.add('hidden');
+        cameraPlaceholder.classList.add('hidden');
+
+        openCameraBtn.classList.add('hidden');
+        uploadLabel.classList.add('hidden');
+        captureBtn.classList.remove('hidden');
+      } catch (err) {
+        alert('Kamera tidak dapat diakses atau izin ditolak. Anda dapat menggunakan tombol "Galeri".');
+      }
+    });
+
+    captureBtn.addEventListener('click', () => {
+      if (!videoStream) return;
+      
+      flashOverlay.classList.remove('camera-flash');
+      void flashOverlay.offsetWidth;
+      flashOverlay.classList.add('camera-flash');
+
+      canvas.width = webcamVideo.videoWidth || 300;
+      canvas.height = webcamVideo.videoHeight || 300;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(webcamVideo, 0, 0, canvas.width, canvas.height);
+
+      capturedPhotoData = canvas.toDataURL('image/jpeg', 0.85);
+      photoPreview.src = capturedPhotoData;
+      photoPreview.classList.remove('hidden');
+      webcamVideo.classList.add('hidden');
+
+      stopCamera();
+      captureBtn.classList.add('hidden');
+      openCameraBtn.classList.remove('hidden');
+      openCameraBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Ulangi';
+      uploadLabel.classList.remove('hidden');
+      lucide.createIcons();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        stopCamera();
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          capturedPhotoData = event.target.result;
+          photoPreview.src = capturedPhotoData;
+          photoPreview.classList.remove('hidden');
+          cameraPlaceholder.classList.add('hidden');
+          webcamVideo.classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function stopCamera() {
+      if (videoStream) {
+        videoStream.getTracks().forEach(track => track.stop());
+        videoStream = null;
+      }
+      webcamVideo.classList.add('hidden');
+    }
+
+    const statusBtns = document.querySelectorAll('.status-selector-btn');
+    statusBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        statusBtns.forEach(b => {
+          b.className = 'status-selector-btn py-2.5 rounded-xl text-xs font-bold border border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100 transition active:scale-95';
+        });
+        btn.className = 'status-selector-btn py-2.5 rounded-xl text-xs font-bold border-2 border-sport-dark bg-sport-dark text-white transition active:scale-95';
+        selectedStatus = btn.dataset.val;
+
+        if (['Sakit', 'Izin', 'Dispen'].includes(selectedStatus)) {
+          keteranganContainer.classList.remove('hidden');
+          if (selectedStatus === 'Sakit') {
+            keteranganLabelText.textContent = 'Keterangan Sakit (Diagnosis / Dokter)';
+            inputKeterangan.placeholder = 'Contoh: Demam, istirahat dokter.';
+          } else if (selectedStatus === 'Izin') {
+            keteranganLabelText.textContent = 'Keterangan Izin (Alasan Kepentingan)';
+            inputKeterangan.placeholder = 'Contoh: Menghadiri acara keluarga.';
+          } else if (selectedStatus === 'Dispen') {
+            keteranganLabelText.textContent = 'Keterangan Dispensasi (Kegiatan / Lomba)';
+            inputKeterangan.placeholder = 'Contoh: Pertandingan basket O2SN.';
+          }
+          inputKeterangan.focus();
+        } else {
+          keteranganContainer.classList.add('hidden');
+          inputKeterangan.value = '';
+        }
+      });
+    });
+
+    function getTodayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    function checkDailyAttendanceStatus() {
+      const today = getTodayKey();
+      const lockKey = `sportclass_locked_${currentStudent.nis}_${today}`;
+      const savedData = localStorage.getItem(lockKey);
+
+      const banner = document.getElementById('attendance-done-banner');
+      const bannerDetail = document.getElementById('attendance-done-detail');
+      const submitBtn = document.getElementById('submit-presensi-btn');
+
+      if (savedData) {
+        const parsed = JSON.parse(savedData);
+        banner.classList.remove('hidden');
+        bannerDetail.textContent = `Status: ${parsed.status} (${parsed.detail}) • Dicatat pada ${parsed.time}`;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sudah Presensi Hari Ini';
+        
+        if (parsed.photo) {
+          photoPreview.src = parsed.photo;
+          photoPreview.classList.remove('hidden');
+          cameraPlaceholder.classList.add('hidden');
+        }
+      } else {
+        banner.classList.add('hidden');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Kirim Presensi Sekarang';
+      }
+    }
+
+    document.getElementById('submit-presensi-btn').addEventListener('click', () => {
+      const today = getTodayKey();
+      const lockKey = `sportclass_locked_${currentStudent.nis}_${today}`;
+
+      if (localStorage.getItem(lockKey)) {
+        alert('Anda sudah melakukan presensi hari ini!');
+        return;
+      }
+
+      if (!capturedPhotoData) {
+        alert('Harap ambil foto selfie atau unggah foto wajah terlebih dahulu!');
+        return;
+      }
+
+      const enteredKeterangan = inputKeterangan.value.trim();
+      if (['Sakit', 'Izin', 'Dispen'].includes(selectedStatus) && !enteredKeterangan) {
+        alert(`Harap isi keterangan/alasan untuk status ${selectedStatus}!`);
+        inputKeterangan.focus();
+        return;
+      }
+
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const timeFormatted = `Pukul ${hours}.${minutes} WIB`;
+
+      let finalDetail = '';
+      let badgeStyle = "bg-emerald-100 text-emerald-900 border border-emerald-300";
+
+      if (selectedStatus === 'Hadir') {
+        const isLate = now.getHours() > 7 || (now.getHours() === 7 && now.getMinutes() > 0);
+        finalDetail = isLate ? `Hadir ${timeFormatted} (telat)` : `Hadir Tepat Waktu (${timeFormatted})`;
+        badgeStyle = isLate ? "bg-amber-100 text-amber-900 border border-amber-300" : "bg-emerald-100 text-emerald-900 border border-emerald-300";
+      } else if (selectedStatus === 'Sakit') {
+        finalDetail = enteredKeterangan;
+        badgeStyle = "bg-rose-100 text-rose-900 border border-rose-300";
+      } else if (selectedStatus === 'Izin') {
+        finalDetail = enteredKeterangan;
+        badgeStyle = "bg-amber-100 text-amber-900 border border-amber-300";
+      } else {
+        finalDetail = enteredKeterangan;
+        badgeStyle = "bg-blue-100 text-blue-900 border border-blue-300";
+      }
+
+      const dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      const dayName = dayNames[now.getDay()];
+      const dateFormatted = `${String(now.getDate()).padStart(2, '0')} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+
+      const newHistoryEntry = {
+        id: 'pres_' + Date.now(),
+        day: dayName,
+        date: dateFormatted,
+        time: timeFormatted,
+        status: selectedStatus,
+        detail: finalDetail,
+        badge: badgeStyle,
+        photo: capturedPhotoData
+      };
+
+      localStorage.setItem(lockKey, JSON.stringify(newHistoryEntry));
+
+      const existingHistory = getStudentHistory(currentStudent.nis);
+      existingHistory.unshift(newHistoryEntry);
+      saveStudentHistory(currentStudent.nis, existingHistory);
+
+      inputKeterangan.value = '';
+      keteranganContainer.classList.add('hidden');
+      renderComprehensiveHistory();
+      checkDailyAttendanceStatus();
+
+      alert(`Presensi berhasil dicatat!\nStatus: ${selectedStatus}\nKeterangan: ${finalDetail}`);
+    });
+
+    function resetAttendanceCard() {
+      capturedPhotoData = null;
+      photoPreview.src = '';
+      photoPreview.classList.add('hidden');
+      cameraPlaceholder.classList.remove('hidden');
+      openCameraBtn.innerHTML = '<i data-lucide="video" class="w-3.5 h-3.5"></i> Buka Kamera';
+      openCameraBtn.classList.remove('hidden');
+      captureBtn.classList.add('hidden');
+      uploadLabel.classList.remove('hidden');
+      keteranganContainer.classList.add('hidden');
+      inputKeterangan.value = '';
+      stopCamera();
+    }
+
+    // Tab Navigation
+    const navButtons = document.querySelectorAll('.nav-button');
+    const tabSections = {
+      'tab-home': document.getElementById('tab-home'),
+      'tab-materi': document.getElementById('tab-materi'),
+      'tab-nilai': document.getElementById('tab-nilai'),
+      'tab-presensi': document.getElementById('tab-presensi')
+    };
+
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.target;
+        Object.keys(tabSections).forEach(key => {
+          tabSections[key].classList.toggle('hidden', key !== target);
+        });
+
+        navButtons.forEach(b => {
+          b.className = 'nav-button flex flex-col items-center gap-1 text-stone-400 hover:text-sport-primary font-medium text-[11px] transition active:scale-90';
+        });
+        btn.className = 'nav-button flex flex-col items-center gap-1 text-sport-dark font-bold text-[11px] transition active:scale-90';
+
+        if (target !== 'tab-presensi') {
+          stopCamera();
+        }
+      });
+    });
+
+    document.querySelectorAll('.accordion-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const content = btn.nextElementSibling;
+        const icon = btn.querySelector('i');
+        const isOpen = !content.classList.contains('hidden');
+        content.classList.toggle('hidden', isOpen);
+        if (icon) {
+          icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+      });
+    });
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>
